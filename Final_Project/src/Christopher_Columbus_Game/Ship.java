@@ -1,5 +1,10 @@
+package Christopher_Columbus_Game;
 import java.util.List;
 import java.util.Random;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.awt.Point;
 import java.util.LinkedList;
 
@@ -14,36 +19,44 @@ import java.util.LinkedList;
 
 
 // The Ship Class: Points and Controls the current Location of the Ship 
-public class Ship implements Subject {
+public class Ship implements Subject
+{
 	
 	List<Observer> observers = new LinkedList<Observer>();
 
 	Point currentLocation;
-	int Gridx;
-	int Gridy;
-	boolean[][] oceangrid;
+	int GridX = OceanExplorer.GridX;
+	int GridY = OceanExplorer.GridY;
+	int Scale = OceanExplorer.Scale;
+	
+	ImageView shipImageView;
+	
 	Random rand = new Random();
 	int RandX;
 	int RandY;
 	
-	Ship(int GridX, int GridY, boolean[][] oceanGrid)
+	public Ship()
 	{
-		Gridx=GridX;
-		Gridy=GridY;
-		oceangrid=oceanGrid;
+		Image shipImage = new Image("Photos\\ship.png",Scale,Scale,true,true);
+		shipImageView = new ImageView(shipImage);
 		
 		do
 		{
-			RandX = rand.nextInt(Gridx);
-			RandY = rand.nextInt(Gridy);
-		}while(oceangrid[RandX][RandY]==true);
+			RandX = rand.nextInt(GridX);
+			RandY = rand.nextInt(GridY);
+		}while(OceanMap.getMap()[RandX][RandY]==true);
 		
 		currentLocation = new Point(RandX,RandY);	
+		
+		shipImageView.setX(currentLocation.x * Scale);
+		shipImageView.setY(currentLocation.y * Scale);
+		
+		OceanExplorer.pane.getChildren().add(shipImageView);
 	}
 
 	public void goEast()
 	{
-		if(currentLocation.x<Gridx-1 && oceangrid[currentLocation.x+1][currentLocation.y]==false)
+		if(currentLocation.x<GridX-1 && OceanMap.getMap()[currentLocation.x+1][currentLocation.y]==false)
 		{
 			currentLocation.x++;
 			notifyObservers();
@@ -52,7 +65,7 @@ public class Ship implements Subject {
 	
 	public void goWest()
 	{
-		if(0<currentLocation.x && oceangrid[currentLocation.x-1][currentLocation.y]==false)
+		if(0<currentLocation.x && OceanMap.getMap()[currentLocation.x-1][currentLocation.y]==false)
 		{
 			currentLocation.x--;
 			notifyObservers();
@@ -61,7 +74,7 @@ public class Ship implements Subject {
 
 	public void goNorth()
 	{
-		if(0<currentLocation.y && oceangrid[currentLocation.x][currentLocation.y-1]==false)
+		if(0<currentLocation.y && OceanMap.getMap()[currentLocation.x][currentLocation.y-1]==false)
 		{
 			currentLocation.y--;
 			notifyObservers();
@@ -70,7 +83,7 @@ public class Ship implements Subject {
 
 	public void goSouth()
 	{
-		if(currentLocation.y<Gridy-1 && oceangrid[currentLocation.x][currentLocation.y+1]==false)
+		if(currentLocation.y<GridY-1 && OceanMap.getMap()[currentLocation.x][currentLocation.y+1]==false)
 		{
 			currentLocation.y++;
 			notifyObservers();
@@ -100,9 +113,17 @@ public class Ship implements Subject {
 	@Override
 	public void notifyObservers()
 	{
-		for (Observer piratesObserver: observers)
-			piratesObserver.update(this);
+		for (Observer AllObserver: observers)
+			AllObserver.update(this);
 		
 	}
 
+	public void setShipLocation(int x, int y)
+	{
+		currentLocation.x = x;
+		currentLocation.y = y;
+		this.shipImageView.setX(x*Scale);
+		this.shipImageView.setY(y*Scale);
+	}
+	
 }
