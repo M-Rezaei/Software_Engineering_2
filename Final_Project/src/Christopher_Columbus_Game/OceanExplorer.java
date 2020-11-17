@@ -31,12 +31,12 @@ public class OceanExplorer extends Application
 	
 	/**********************************************************************************************/
 	public static final int Scale                        = 50;   // Size   (Size of each cell of the Ocean) 
-	public static final int GridX                        = 12;   // Width  (Number of Cell in Width)
-	public static final int GridY                        = 12;   // Height (Number of Cell in Height)
+	public static final int GridX                        = 13;   // Width  (Number of Cell in Width)
+	public static final int GridY                        = 13;   // Height (Number of Cell in Height)
 	public static final int Island                       = 25;   // Number of Islands
 	public static final int PirateIslandNumber           = 2;    // Number of Pirate Islands
-	public static final int PirateRevengeNumber          = 2;    // Number of Revenge Pirate Ships	
-	public static final int PirateAdventureGalleyNumber  = 3;    // Number of Adventure Galley Pirate Ships	
+	public static final int PirateRevengeNumber          = 1;    // Number of Revenge Pirate Ships	
+	public static final int PirateAdventureGalleyNumber  = 2;    // Number of Adventure Galley Pirate Ships	
 
 	/**********************************************************************************************/
 	Scene scene;
@@ -365,13 +365,13 @@ public class OceanExplorer extends Application
 		
         mediaBackground = new Media(new File("src\\Voices\\Background.mp3").toURI().toString());
         playerBackground = new MediaPlayer(mediaBackground); 
-        playerBackground.setVolume(0.4);
+        playerBackground.setVolume(0.12);
         MediaView playerView = new MediaView(playerBackground);
         pane.getChildren().add(playerView);
         
         mediaWin = new Media(new File("src\\Voices\\Win.wav").toURI().toString());
         playerWin = new MediaPlayer(mediaWin); 
-        playerWin.setVolume(0.2);
+        playerWin.setVolume(0.1);
         
         mediaLose = new Media(new File("src\\Voices\\Lose.wav").toURI().toString());
         playerLose = new MediaPlayer(mediaLose); 
@@ -379,7 +379,7 @@ public class OceanExplorer extends Application
         
         mediaMove = new Media(new File("src\\Voices\\Move.wav").toURI().toString());
         playerMove = new MediaPlayer(mediaMove); 
-        playerMove.setVolume(0.3);
+        playerMove.setVolume(0.12);
         
 		scene = new Scene(pane, (GridX*Scale), (GridY*Scale));
 		OceanStage.setTitle("Christopher Columbus Game  (^_^)");
